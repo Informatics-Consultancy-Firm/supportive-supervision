@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaria Supportive Supervision - Data Collection Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-family: 'Oswald', Arial, sans-serif;
+            color: #000000;
+            font-weight: 700;
+            padding: 20px;
+        }
+
+        /* ============================================ */
+        /* LOGIN SCREEN */
+        /* ============================================ */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .login-header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .login-header img {
+            width: 140px;
+            vertical-align: middle;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .login-header h3 {
+            margin: 12px 0 5px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .login-header p {
+            margin: 0;
+            font-size: 10px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .login-body {
+            border: 4px double #004080;
+            border-radius: 12px;
+            padding: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        .login-content {
+            padding: 35px;
+        }
+
+        .login-title {
+            font-size: 17px;
+            color: #000000;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: #000000;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .login-form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            color: #000000;
+            font-size: 16px;
+            font-family: 'Oswald', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #004080;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: #004080;
+            color: #ffffff;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            font-family: 'Oswald', Arial, sans-serif;
+        }
+
+        .login-btn:hover {
+            background: #0056b3;
+            color: #ffffff;
+        }
+
+        .login-error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid #dc3545;
+            color: #dc3545;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            font-weight: 700;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        .login-footer {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.7;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .login-footer p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        /* ============================================ */
+        /* MAIN CONTENT */
+        /* ============================================ */
+        .main-content {
+            display: none;
+        }
+
+        .main-content.show {
+            display: block;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .page-header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 25px 30px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .page-header img {
+            width: 140px;
+            vertical-align: middle;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .page-header h3 {
+            margin: 12px 0 5px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .page-header .tagline {
+            margin: 0;
+            font-size: 10px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .page-header h1 {
+            margin: 20px 0 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .page-header .subtitle {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* CONTROLS */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: #004080;
+            color: #ffffff;
+            border: 2px solid #004080;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Oswald', Arial, sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .control-btn:hover {
+            background: #0056b3;
+            border-color: #0056b3;
+            color: #ffffff;
+        }
+
+        .control-btn.draft-btn {
+            background: #ffc107;
+            border-color: #ffc107;
+            color: #000000;
+        }
+
+        .control-btn.draft-btn:hover {
+            background: #e0a800;
+            border-color: #e0a800;
+        }
+
+        /* STATUS BAR */
+        .status-bar {
+            background: #ffffff;
+            border: 2px solid #004080;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.online {
+            background: #28a745;
+        }
+
+        .status-indicator.offline {
+            background: #dc3545;
+        }
+
+        .status-text {
+            font-weight: 700;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        .pending-count {
+            background: #004080;
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid #004080;
+        }
+
+        .draft-count {
+            background: #ffc107;
+            color: #000000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid #ffc107;
+        }
+
+        /* FORM CARD */
+        .form-card {
+            border: 4px double #004080;
+            border-radius: 12px;
+            padding: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .form-content {
+            padding: 35px;
+        }
+
+        /* PROGRESS */
+        .progress-bar {
+            background: #f8f9fa;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 2px solid #004080;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #004080, #0056b3);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #000000;
+            font-size: 12px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        /* SECTION */
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #004080;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #004080;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .section-description {
+            color: #000000;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* FORM ELEMENTS - ONE QUESTION PER ROW */
+        .form-group {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label .required {
+            color: #dc3545;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            color: #000000;
+            font-size: 16px;
+            font-family: 'Oswald', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #004080;
+        }
+
+        .form-select:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #e9ecef;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-input[readonly] {
+            background: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        /* RADIO BUTTONS */
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .radio-option:hover {
+            background: #e7f3ff;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #004080;
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: #004080;
+        }
+
+        /* CHECKBOX GROUP */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .checkbox-option:hover {
+            background: #e7f3ff;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #004080;
+        }
+
+        /* QUALITY BUTTONS */
+        .quality-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quality-btn {
+            padding: 12px 16px;
+            border: 2px solid;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .quality-btn.excellent {
+            border-color: #28a745;
+            background: #ffffff;
+            color: #28a745;
+        }
+
+        .quality-btn.excellent:hover,
+        .quality-btn.excellent.selected {
+            background: #28a745;
+            color: #ffffff;
+        }
+
+        .quality-btn.acceptable {
+            border-color: #ffc107;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .quality-btn.acceptable:hover,
+        .quality-btn.acceptable.selected {
+            background: #ffc107;
+            color: #000000;
+        }
+
+        .quality-btn.needs-improvement {
+            border-color: #dc3545;
+            background: #ffffff;
+            color: #dc3545;
+        }
+
+        .quality-btn.needs-improvement:hover,
+        .quality-btn.needs-improvement.selected {
+            background: #dc3545;
+            color: #ffffff;
+        }
+
+        /* SIGNATURE PAD */
+        .signature-container {
+            border: 2px solid #004080;
+            border-radius: 6px;
+            background: #ffffff;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .signature-canvas {
+            width: 100%;
+            height: 150px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            background: #ffffff;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        .signature-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .signature-btn {
+            padding: 8px 16px;
+            background: #dc3545;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .signature-btn:hover {
+            background: #c82333;
+        }
+
+        /* GPS LOCATION */
+        .gps-container {
+            background: #e7f3ff;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .gps-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .gps-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6c757d;
+        }
+
+        .gps-icon.loading {
+            background: #ffc107;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .gps-icon.success {
+            background: #28a745;
+        }
+
+        .gps-icon.error {
+            background: #dc3545;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .gps-info {
+            font-size: 12px;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .gps-coords {
+            font-size: 11px;
+            color: #004080;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .gps-btn {
+            padding: 8px 16px;
+            background: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .gps-btn:hover {
+            background: #0056b3;
+        }
+
+        .gps-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* NAVIGATION */
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 14px 24px;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Oswald', Arial, sans-serif;
+            min-width: 120px;
+        }
+
+        .btn-back {
+            background: #ffffff;
+            color: #004080;
+        }
+
+        .btn-back:hover {
+            background: #004080;
+            color: #ffffff;
+        }
+
+        .btn-next {
+            background: #004080;
+            color: #ffffff;
+        }
+
+        .btn-next:hover {
+            background: #0056b3;
+            border-color: #0056b3;
+            color: #ffffff;
+        }
+
+        .btn-draft {
+            background: #ffc107;
+            color: #000000;
+            border-color: #ffc107;
+        }
+
+        .btn-draft:hover {
+            background: #e0a800;
+            border-color: #e0a800;
+        }
+
+        .btn-finalize {
+            background: #17a2b8;
+            color: #ffffff;
+            border-color: #17a2b8;
+        }
+
+        .btn-finalize:hover {
+            background: #138496;
+            border-color: #138496;
+        }
+
+        .btn-submit {
+            background: #28a745;
+            color: #ffffff;
+            border-color: #28a745;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #218838;
+            border-color: #218838;
+            color: #ffffff;
+        }
+
+        .btn-submit:disabled,
+        .btn-finalize:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* FOOTER */
+        .page-footer {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.7;
+            font-weight: 700;
+        }
+
+        .page-footer p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        /* NOTIFICATION */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            border: 2px solid #004080;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        .notification.success {
+            border-left: 4px solid #28a745;
+        }
+
+        .notification.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        .notification.info {
+            border-left: 4px solid #004080;
+        }
+
+        .notification.warning {
+            border-left: 4px solid #ffc107;
+        }
+
+        .notification-text {
+            color: #000000;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* DRAFTS MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 4px double #004080;
+        }
+
+        .modal-header {
+            background: #004080;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .draft-item {
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .draft-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .draft-item-title {
+            font-weight: 700;
+            color: #004080;
+            font-size: 16px;
+        }
+
+        .draft-item-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .draft-item-date {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .draft-item-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .draft-action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            border: none;
+        }
+
+        .draft-action-btn.load {
+            background: #004080;
+            color: #ffffff;
+        }
+
+        .draft-action-btn.delete {
+            background: #dc3545;
+            color: #ffffff;
+        }
+
+        .no-drafts {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
+            font-size: 14px;
+        }
+
+        /* Draft Name Modal */
+        .draft-name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .draft-name-modal.show {
+            display: flex;
+        }
+
+        .draft-name-content {
+            background: #ffffff;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            border: 4px double #004080;
+        }
+
+        .draft-name-header {
+            background: #ffc107;
+            color: #000000;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .draft-name-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .draft-name-body {
+            padding: 30px;
+        }
+
+        .draft-name-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .draft-name-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            color: #000000;
+            font-size: 16px;
+            font-family: 'Oswald', Arial, sans-serif;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .draft-name-input:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+
+        .draft-name-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .draft-name-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            text-transform: uppercase;
+            border: 2px solid;
+        }
+
+        .draft-name-btn.cancel {
+            background: #ffffff;
+            color: #004080;
+            border-color: #004080;
+        }
+
+        .draft-name-btn.cancel:hover {
+            background: #f8f9fa;
+        }
+
+        .draft-name-btn.save {
+            background: #ffc107;
+            color: #000000;
+            border-color: #ffc107;
+        }
+
+        .draft-name-btn.save:hover {
+            background: #e0a800;
+            border-color: #e0a800;
+        }
+
+        /* Form Status Badge */
+        .form-status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        .form-status-badge.draft {
+            background: #ffc107;
+            color: #000000;
+        }
+
+        .form-status-badge.finalized {
+            background: #17a2b8;
+            color: #ffffff;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-content,
+            .login-content {
+                padding: 25px;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification {
+                left: 20px;
+                right: 20px;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+            }
+
+            .btn-nav {
+                width: 100%;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- LOGIN SCREEN -->
+    <!-- ============================================ -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <!-- HEADER -->
+            <div class="login-header">
+                <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo">
+                <h3>Informatics Consultancy Firm-Sierra Leone<br>(ICF-SL)</h3>
+                <p><em>Driving Data-Driven Solutions for Health and Development</em></p>
+            </div>
+
+            <!-- BODY -->
+            <div class="login-body">
+                <div class="login-content">
+                    <h2 class="login-title">SUPPORTIVE SUPERVISION</h2>
+                    <p class="login-subtitle">Comprehensive Malaria Supportive Supervision<br>Data Collection System<br><br>National Malaria Control Programme</p>
+
+                    <div class="login-error" id="loginError">Invalid username or password</div>
+
+                    <form id="loginForm">
+                        <div class="login-form-group">
+                            <label class="login-label">USERNAME</label>
+                            <input type="text" class="login-input" id="username" required autocomplete="username">
+                        </div>
+
+                        <div class="login-form-group">
+                            <label class="login-label">PASSWORD</label>
+                            <input type="password" class="login-input" id="password" required autocomplete="current-password">
+                        </div>
+
+                        <button type="submit" class="login-btn">LOGIN</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="login-footer">
+                <p style="margin: 0;">National Malaria Control Programme</p>
+                <p>Ministry of Health and Sanitation, Sierra Leone</p>
+                <p style="font-size: 11px;">Medical Stores Compound, Freetown, Sierra Leone</p>
+                <p style="font-size: 10px;">© 2025 Informatics Consultancy Firm-Sierra Leone (ICF-SL)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================================ -->
+    <div class="main-content" id="mainContent">
+        <div class="page-container">
+            <!-- HEADER -->
+            <div class="page-header">
+                <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo">
+                <h3>Informatics Consultancy Firm-Sierra Leone<br>(ICF-SL)</h3>
+                <p class="tagline"><em>Driving Data-Driven Solutions for Health and Development</em></p>
+                <h1>MALARIA SUPPORTIVE SUPERVISION</h1>
+                <p class="subtitle">Comprehensive Checklist - Data Collection Form</p>
+                <p class="subtitle" style="font-size: 11px; margin-top: 5px;">National Malaria Control Programme</p>
+            </div>
+
+            <!-- CONTROLS -->
+            <div class="controls-bar">
+                <button class="control-btn" id="viewDataBtn">📊 VIEW DATA</button>
+                <button class="control-btn draft-btn" id="viewDraftsBtn">📝 VIEW DRAFTS</button>
+                <button class="control-btn" id="logoutBtn">LOGOUT</button>
+            </div>
+
+            <!-- STATUS BAR -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-indicator" id="statusIndicator"></div>
+                    <span class="status-text" id="statusText">CHECKING...</span>
+                </div>
+                <div class="status-item">
+                    <span style="color: #000000; font-size: 12px;">DRAFTS:</span>
+                    <span class="draft-count" id="draftCount">0</span>
+                </div>
+                <div class="status-item">
+                    <span style="color: #000000; font-size: 12px;">PENDING:</span>
+                    <span class="pending-count" id="pendingCount">0</span>
+                </div>
+            </div>
+
+            <!-- FORM CARD -->
+            <div class="form-card">
+                <div class="form-content">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">SECTION 1 OF 10 <span id="formStatusBadge"></span></div>
+
+                    <form id="dataForm">
+                        <input type="hidden" name="form_status" id="form_status" value="draft">
+                        <input type="hidden" name="draft_id" id="draft_id" value="">
+                        <div id="dynamicSections"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="page-footer">
+                <p style="margin: 0;">National Malaria Control Programme</p>
+                <p>Ministry of Health and Sanitation, Sierra Leone</p>
+                <p style="font-size: 11px;">Medical Stores Compound, Freetown, Sierra Leone</p>
+                <p style="font-size: 10px;">© 2025 Informatics Consultancy Firm-Sierra Leone (ICF-SL)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAFTS MODAL -->
+    <div class="modal-overlay" id="draftsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">📝 SAVED DRAFTS</span>
+                <button class="modal-close" onclick="closeDraftsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="draftsModalBody">
+                <!-- Drafts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAFT NAME MODAL -->
+    <div class="draft-name-modal" id="draftNameModal">
+        <div class="draft-name-content">
+            <div class="draft-name-header">
+                <h3 class="draft-name-title">💾 SAVE DRAFT</h3>
+            </div>
+            <div class="draft-name-body">
+                <label class="draft-name-label">ENTER A NAME FOR THIS DRAFT:</label>
+                <input type="text" class="draft-name-input" id="draftNameInput" placeholder="e.g., Bo Government Hospital - Dec 2025">
+                <div class="draft-name-buttons">
+                    <button class="draft-name-btn cancel" onclick="cancelDraftName()">CANCEL</button>
+                    <button class="draft-name-btn save" onclick="confirmSaveDraft()">SAVE DRAFT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION -->
+    <div class="notification" id="notification">
+        <span class="notification-text" id="notificationText"></span>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const CONFIG = {
+            SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
+            GOOGLE_SHEET_URL: 'YOUR_GOOGLE_SHEET_URL',
+            LOGIN_USERNAME: 'admin',
+            LOGIN_PASSWORD: 'admin'
+        };
+
+        // ============================================
+        // CASCADING DATA FOR SIERRA LEONE
+        // ============================================
+        const CASCADING_DATA = `Eastern Region||Kailahun District
+Eastern Region||Kenema District
+Eastern Region||Kono District
+Northern Region||Bombali District
+Northern Region||Falaba District
+Northern Region||Koinadugu District
+Northern Region||Tonkolili District
+North West Region||Kambia District
+North West Region||Karene District
+North West Region||Port Loko District
+Southern Region||Bo District
+Southern Region||Bonthe District
+Southern Region||Moyamba District
+Southern Region||Pujehun District
+Western Area||Western Area Urban District
+Western Area||Western Area Rural District
+Bo District||Bo City
+Bo District||Badjia Chiefdom
+Bo District||Bagbwe Chiefdom
+Bo District||Baoma Chiefdom
+Bo District||Bargbo Chiefdom
+Kailahun District||Dea Chiefdom
+Kailahun District||Luawa Chiefdom
+Kailahun District||Jawei Chiefdom
+Kenema District||Kenema City
+Kenema District||Nongowa Chiefdom
+Kenema District||Small Bo Chiefdom
+Bombali District||Makeni City
+Bombali District||Bombali Sebora Chiefdom
+Tonkolili District||Kunike Barina Chiefdom
+Tonkolili District||Yoni Mabanta Chiefdom
+Port Loko District||Port Loko City
+Port Loko District||Maforki Chiefdom
+Western Area Urban District||Central 1 Zone
+Western Area Urban District||East 1 Zone
+Western Area Urban District||West 1 Zone
+Western Area Rural District||Waterloo Rural Zone
+Western Area Rural District||Koya Rural Zone
+Badjia Chiefdom||Badjia CHC||PHU001
+Bo City||Bo Government Hospital||PHU002
+Dea Chiefdom||Dea CHC||PHU003
+Luawa Chiefdom||Kailahun Government Hospital||PHU004
+Kenema City||Kenema Government Hospital||PHU005`;
+
+        // ============================================
+        // FORM SECTIONS DEFINITION
+        // ============================================
+        const FORM_SECTIONS = {
+            '1.0 Administrative Information': {
+                description: 'Basic facility and supervision details',
+                fields: {
+                    supervision_date: { label: 'Date of Supervision', type: 'date' },
+                    region: { label: 'Region', type: 'cascading', level: 1 },
+                    district: { label: 'District', type: 'cascading', level: 2 },
+                    chiefdom: { label: 'Chiefdom', type: 'cascading', level: 3 },
+                    facility_name: { label: 'Facility Name (PHU)', type: 'cascading', level: 4 },
+                    facility_uid: { label: 'Facility UID', type: 'text', readonly: true, required: false },
+                    hospital_head_name: { label: 'Name of Hospital Head', type: 'text' },
+                    hospital_head_title: { label: 'Title of Hospital Head', type: 'text' }
+                }
+            },
+            '2.0 Health Facility Readiness': {
+                description: 'Assess availability of essential resources and logistics',
+                fields: {
+                    guidelines_available: { label: '2.1 National Malaria Treatment Guidelines (T3) Available?', type: 'yesno' },
+                    rdts_available: { label: '2.2 Functioning Malaria RDTs (within expiry)?', type: 'yesno' },
+                    microscopy_available: { label: '2.3 Functioning Microscope and Stains?', type: 'yesno' },
+                    microscopy_issue_reason: { label: '2.3.1 Reason for Non-functioning Microscope (if No)', type: 'multiselect', required: false,
+                        options: ['Lack of Scheduled/Preventive Maintenance', 'Improper Use and Handling', 'Lack of Essential Utilities/Consumables', 'No Trained Repair Technicians', 'Awaiting Condemnation/Replacement'] },
+                    acts_available: { label: '2.4 Stock of ACTs for All Age Groups?', type: 'yesno' },
+                    iv_artesunate_available: { label: '2.5 Stock of Injectable/IV Artesunate?', type: 'yesno' },
+                    iptp_llins_available: { label: '2.6 IPTp (SP) and LLINs Availability?', type: 'yesno' },
+                    supportive_drugs_available: { label: '2.7 Essential Supportive Drugs Available?', type: 'yesno' },
+                    oxygen_suction_available: { label: '2.8 Functioning Oxygen Supply and Suction Apparatus?', type: 'yesno' },
+                    readiness_quality: { label: '2.9 Quality Categorization', type: 'quality' }
+                }
+            },
+            '3.1 Clinical Competency (Test & Treat)': {
+                description: 'Observe patient encounters and review clinical notes',
+                fields: {
+                    testing_protocol: { label: '3.1.1 Was fever case appropriately tested before treatment?', type: 'yesnona' },
+                    treatment_protocol: { label: '3.1.2 Was positive case treated with correct ACT?', type: 'yesnona' },
+                    differential_rx: { label: '3.1.3 Was negative case NOT treated with antimalarial?', type: 'yesnona' },
+                    severe_mgmt: { label: '3.1.4 Was IV/IM Artesunate administered correctly for severe malaria?', type: 'yesnona' },
+                    patient_education: { label: '3.1.5 Did HCW provide clear instructions on ACT adherence?', type: 'yesnona' }
+                }
+            },
+            '3.2 Data Quality and Use (Track)': {
+                description: 'Assess data completeness, accuracy, and use',
+                fields: {
+                    data_completeness: { label: '3.2.1 Key columns in malaria register completed?', type: 'compliant' },
+                    reporting_accuracy: { label: '3.2.3 Does DHIS2 report match register sum?', type: 'yesno' },
+                    stock_record_match: { label: '3.2.4 Do physical stock counts match stock cards?', type: 'yesno' },
+                    data_use: { label: '3.2.5 Is facility using its own data for local actions?', type: 'yesno' },
+                    data_quality: { label: '3.2.6 Quality Categorization', type: 'quality' }
+                }
+            },
+            '3.2.2 Data Quality Check': {
+                description: 'Verify data across registers, summary forms, and DHIS2 (Month 1)',
+                fields: {
+                    dqc_month1_label: { label: 'Month 1 Name', type: 'text', placeholder: 'Enter month name (e.g., October 2025)' },
+                    dqc_month1_admitted_register: { label: 'Admitted (Register)', type: 'number', required: false },
+                    dqc_month1_admitted_summary: { label: 'Admitted (Summary Form)', type: 'number', required: false },
+                    dqc_month1_admitted_dhis2: { label: 'Admitted (DHIS2)', type: 'number', required: false },
+                    dqc_month1_discharged_register: { label: 'Discharged (Register)', type: 'number', required: false },
+                    dqc_month1_discharged_summary: { label: 'Discharged (Summary Form)', type: 'number', required: false },
+                    dqc_month1_discharged_dhis2: { label: 'Discharged (DHIS2)', type: 'number', required: false },
+                    dqc_month1_deaths_register: { label: 'Deaths (Register)', type: 'number', required: false },
+                    dqc_month1_deaths_summary: { label: 'Deaths (Summary Form)', type: 'number', required: false },
+                    dqc_month1_deaths_dhis2: { label: 'Deaths (DHIS2)', type: 'number', required: false },
+                    dqc_month1_referred_register: { label: 'Referred (Register)', type: 'number', required: false },
+                    dqc_month1_referred_summary: { label: 'Referred (Summary Form)', type: 'number', required: false },
+                    dqc_month1_referred_dhis2: { label: 'Referred (DHIS2)', type: 'number', required: false }
+                }
+            },
+            '4.0 Malaria Death Audit': {
+                description: 'Review for most recent death (file review and staff interview)',
+                fields: {
+                    timely_diagnosis_met: { label: '4.1.1 Patient diagnosed within 1 hour - Standard Met?', type: 'yesno', required: false },
+                    timely_diagnosis_delay: { label: '4.1.1 Delay or Failure Observed?', type: 'yesno', required: false },
+                    first_dose_met: { label: '4.1.2 First dose IV Artesunate given immediately - Standard Met?', type: 'yesno', required: false },
+                    first_dose_delay: { label: '4.1.2 Delay or Failure Observed?', type: 'yesno', required: false },
+                    supportive_care_met: { label: '4.1.3 Appropriate supportive management given - Standard Met?', type: 'yesno', required: false },
+                    supportive_care_delay: { label: '4.1.3 Delay or Failure Observed?', type: 'yesno', required: false },
+                    monitoring_met: { label: '4.1.4 Vital signs monitored adequately - Standard Met?', type: 'yesno', required: false },
+                    monitoring_delay: { label: '4.1.4 Delay or Failure Observed?', type: 'yesno', required: false },
+                    death_preventable: { label: '4.1.5 Was the death preventable?', type: 'select', options: ['Yes', 'No', 'Undecided'], required: false },
+                    death_audit_quality: { label: 'Quality Categorization', type: 'quality', required: false }
+                }
+            },
+            '5.0 Systemic Contribution Analysis': {
+                description: 'Analyze system-level factors contributing to outcomes',
+                fields: {
+                    stockout_occurred: { label: '5.1 Were IV Artesunate, blood products, or essential drugs out of stock?', type: 'yesno' },
+                    competency_lacking: { label: '5.2 Did treating staff lack knowledge/skill for severe case?', type: 'yesno' },
+                    access_barriers: { label: '5.3 Did patient arrive late due to transport, financial, or community barriers?', type: 'yesno' },
+                    systemic_quality: { label: '5.4 Quality Categorization', type: 'quality' }
+                }
+            },
+            '6.0 SWOT Analysis': {
+                description: 'Identify strengths, weaknesses, opportunities, and threats',
+                fields: {
+                    strength_1: { label: 'Strength 1', type: 'text', required: false },
+                    strength_2: { label: 'Strength 2', type: 'text', required: false },
+                    strength_3: { label: 'Strength 3', type: 'text', required: false },
+                    weakness_1: { label: 'Weakness 1', type: 'text', required: false },
+                    weakness_2: { label: 'Weakness 2', type: 'text', required: false },
+                    weakness_3: { label: 'Weakness 3', type: 'text', required: false },
+                    opportunity_1: { label: 'Opportunity 1', type: 'text', required: false },
+                    opportunity_2: { label: 'Opportunity 2', type: 'text', required: false },
+                    opportunity_3: { label: 'Opportunity 3', type: 'text', required: false },
+                    threat_1: { label: 'Threat 1', type: 'text', required: false },
+                    threat_2: { label: 'Threat 2', type: 'text', required: false },
+                    threat_3: { label: 'Threat 3', type: 'text', required: false }
+                }
+            },
+            '7.0 Collaborative Action Plan': {
+                description: 'List top 3 priority gaps and recommended actions',
+                fields: {
+                    gap_1: { label: 'Priority Gap 1', type: 'text', required: false },
+                    gap_1_section: { label: 'Gap 1 - Section Source', type: 'select', options: ['2.0 Readiness', '3.0 Clinical/Data', '4.0 Death Audit', '5.0 Systemic'], required: false },
+                    gap_1_action: { label: 'Gap 1 - Recommended Action', type: 'text', required: false },
+                    gap_1_responsible: { label: 'Gap 1 - Responsible Person', type: 'text', required: false },
+                    gap_1_due_date: { label: 'Gap 1 - Due Date', type: 'date', required: false },
+                    gap_2: { label: 'Priority Gap 2', type: 'text', required: false },
+                    gap_2_section: { label: 'Gap 2 - Section Source', type: 'select', options: ['2.0 Readiness', '3.0 Clinical/Data', '4.0 Death Audit', '5.0 Systemic'], required: false },
+                    gap_2_action: { label: 'Gap 2 - Recommended Action', type: 'text', required: false },
+                    gap_2_responsible: { label: 'Gap 2 - Responsible Person', type: 'text', required: false },
+                    gap_2_due_date: { label: 'Gap 2 - Due Date', type: 'date', required: false },
+                    gap_3: { label: 'Priority Gap 3', type: 'text', required: false },
+                    gap_3_section: { label: 'Gap 3 - Section Source', type: 'select', options: ['2.0 Readiness', '3.0 Clinical/Data', '4.0 Death Audit', '5.0 Systemic'], required: false },
+                    gap_3_action: { label: 'Gap 3 - Recommended Action', type: 'text', required: false },
+                    gap_3_responsible: { label: 'Gap 3 - Responsible Person', type: 'text', required: false },
+                    gap_3_due_date: { label: 'Gap 3 - Due Date', type: 'date', required: false }
+                }
+            },
+            '8.0 Supervision Team & GPS': {
+                description: 'Supervision team details and location capture',
+                fields: {
+                    supervisor_1_name: { label: 'Supervisor 1 - Name', type: 'text' },
+                    supervisor_1_sex: { label: 'Supervisor 1 - Sex', type: 'select', options: ['Male', 'Female'] },
+                    supervisor_1_org: { label: 'Supervisor 1 - Organization', type: 'text' },
+                    supervisor_1_signature: { label: 'Supervisor 1 - Signature', type: 'signature', required: false },
+                    supervisor_2_name: { label: 'Supervisor 2 - Name', type: 'text', required: false },
+                    supervisor_2_sex: { label: 'Supervisor 2 - Sex', type: 'select', options: ['Male', 'Female'], required: false },
+                    supervisor_2_org: { label: 'Supervisor 2 - Organization', type: 'text', required: false },
+                    supervisor_2_signature: { label: 'Supervisor 2 - Signature', type: 'signature', required: false },
+                    gps_location: { label: 'GPS Coordinates', type: 'gps', required: false },
+                    additional_notes: { label: 'Additional Notes/Observations', type: 'textarea', required: false }
+                }
+            }
+        };
+
+        // ============================================
+        // STATE
+        // ============================================
+        const state = {
+            pendingSubmissions: [],
+            drafts: [],
+            isOnline: navigator.onLine,
+            isLoggedIn: false,
+            currentSection: 1,
+            totalSections: 0,
+            regionDistrictMap: {},
+            districtChiefdomMap: {},
+            chiefdomPHUMap: {},
+            phuUIDMap: {},
+            signaturePads: {},
+            gpsLocation: null,
+            formStatus: 'draft',
+            currentDraftId: null,
+            currentDraftName: null
+        };
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        function init() {
+            const savedPending = localStorage.getItem('supervisionPending');
+            if (savedPending) {
+                try { state.pendingSubmissions = JSON.parse(savedPending); } catch (e) { state.pendingSubmissions = []; }
+            }
+
+            const savedDrafts = localStorage.getItem('supervisionDrafts');
+            if (savedDrafts) {
+                try { state.drafts = JSON.parse(savedDrafts); } catch (e) { state.drafts = []; }
+            }
+
+            state.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            parseCascadingData();
+            
+            if (state.isLoggedIn) {
+                showMainContent();
+            }
+
+            setupEventListeners();
+            generateFormSections();
+        }
+
+        function parseCascadingData() {
+            const lines = CASCADING_DATA.trim().split('\n');
+            
+            lines.forEach(line => {
+                const parts = line.split('||');
+                if (parts.length === 2) {
+                    const [parent, child] = parts.map(s => s.trim());
+                    
+                    if (parent.includes('Region') || parent === 'Western Area') {
+                        if (!state.regionDistrictMap[parent]) state.regionDistrictMap[parent] = [];
+                        if (!state.regionDistrictMap[parent].includes(child)) state.regionDistrictMap[parent].push(child);
+                    } else if (parent.includes('District')) {
+                        if (!state.districtChiefdomMap[parent]) state.districtChiefdomMap[parent] = [];
+                        if (!state.districtChiefdomMap[parent].includes(child)) state.districtChiefdomMap[parent].push(child);
+                    } else {
+                        if (!state.chiefdomPHUMap[parent]) state.chiefdomPHUMap[parent] = [];
+                        if (!state.chiefdomPHUMap[parent].includes(child)) state.chiefdomPHUMap[parent].push(child);
+                    }
+                } else if (parts.length === 3) {
+                    const [chiefdom, phu, uid] = parts.map(s => s.trim());
+                    if (!state.chiefdomPHUMap[chiefdom]) state.chiefdomPHUMap[chiefdom] = [];
+                    if (!state.chiefdomPHUMap[chiefdom].includes(phu)) state.chiefdomPHUMap[chiefdom].push(phu);
+                    state.phuUIDMap[phu] = uid;
+                }
+            });
+        }
+
+        function generateFormSections() {
+            const container = document.getElementById('dynamicSections');
+            let html = '';
+            let sectionNum = 1;
+            
+            const sectionKeys = Object.keys(FORM_SECTIONS);
+            state.totalSections = sectionKeys.length;
+            
+            sectionKeys.forEach((sectionTitle, index) => {
+                const section = FORM_SECTIONS[sectionTitle];
+                const isLastSection = index === sectionKeys.length - 1;
+                
+                html += `
+                    <div class="form-section ${sectionNum === 1 ? 'active' : ''}" data-section="${sectionNum}">
+                        <div class="section-header">
+                            <h2 class="section-title">${sectionTitle.toUpperCase()}</h2>
+                            <p class="section-description">${section.description}</p>
+                        </div>
+                `;
+                
+                const fields = Object.entries(section.fields);
+                fields.forEach(([fieldName, fieldConfig]) => {
+                    const label = fieldConfig.label;
+                    const type = fieldConfig.type || 'text';
+                    const required = fieldConfig.required !== false;
+                    
+                    html += '<div class="form-group">';
+                    html += `<label class="form-label">${label.toUpperCase()} ${required ? '<span class="required">*</span>' : ''}</label>`;
+                    
+                    if (type === 'signature') {
+                        html += `
+                            <div class="signature-container">
+                                <canvas class="signature-canvas" id="${fieldName}_canvas" data-field="${fieldName}"></canvas>
+                                <div class="signature-controls">
+                                    <button type="button" class="signature-btn" onclick="clearSignature('${fieldName}')">CLEAR</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="${fieldName}" id="${fieldName}" ${required ? 'required' : ''}>
+                        `;
+                    } else if (type === 'gps') {
+                        html += `
+                            <div class="gps-container">
+                                <div class="gps-status">
+                                    <div class="gps-icon" id="gps_icon"></div>
+                                    <div>
+                                        <div class="gps-info" id="gps_status">Click button to capture GPS location (Optional - 2 minute timeout)</div>
+                                        <div class="gps-coords" id="gps_coords"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="gps-btn" id="gps_capture_btn" onclick="captureGPS()">📍 CAPTURE GPS LOCATION</button>
+                            </div>
+                            <input type="hidden" name="gps_latitude" id="gps_latitude">
+                            <input type="hidden" name="gps_longitude" id="gps_longitude">
+                            <input type="hidden" name="gps_accuracy" id="gps_accuracy">
+                            <input type="hidden" name="gps_timestamp" id="gps_timestamp">
+                        `;
+                    } else if (type === 'yesno') {
+                        html += `
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="Yes" ${required ? 'required' : ''}>
+                                    <span>Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="No">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        `;
+                    } else if (type === 'yesnona') {
+                        html += `
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="Yes" ${required ? 'required' : ''}>
+                                    <span>Yes</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="No">
+                                    <span>No</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="N/A">
+                                    <span>N/A</span>
+                                </label>
+                            </div>
+                        `;
+                    } else if (type === 'compliant') {
+                        html += `
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="Compliant" ${required ? 'required' : ''}>
+                                    <span>Compliant (1)</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="Non-Compliant">
+                                    <span>Non-Compliant (0)</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="${fieldName}" value="N/A">
+                                    <span>N/A</span>
+                                </label>
+                            </div>
+                        `;
+                    } else if (type === 'quality') {
+                        html += `
+                            <div class="quality-buttons">
+                                <button type="button" class="quality-btn excellent" data-field="${fieldName}" data-value="Excellent" onclick="selectQuality(this)">✓ EXCELLENT (PASS)</button>
+                                <button type="button" class="quality-btn acceptable" data-field="${fieldName}" data-value="Acceptable" onclick="selectQuality(this)">⚠ ACCEPTABLE (CONDITIONAL)</button>
+                                <button type="button" class="quality-btn needs-improvement" data-field="${fieldName}" data-value="Needs Improvement" onclick="selectQuality(this)">✗ NEEDS IMPROVEMENT (FAIL)</button>
+                            </div>
+                            <input type="hidden" name="${fieldName}" id="${fieldName}" ${required ? 'required' : ''}>
+                        `;
+                    } else if (type === 'multiselect' && fieldConfig.options) {
+                        html += '<div class="checkbox-group">';
+                        fieldConfig.options.forEach(opt => {
+                            html += `
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="${fieldName}" value="${opt}">
+                                    <span>${opt}</span>
+                                </label>
+                            `;
+                        });
+                        html += '</div>';
+                    } else if (type === 'select' && fieldConfig.options) {
+                        html += `<select class="form-select" name="${fieldName}" ${required ? 'required' : ''}>`;
+                        html += '<option value="">Select...</option>';
+                        fieldConfig.options.forEach(option => {
+                            html += `<option value="${option}">${option}</option>`;
+                        });
+                        html += '</select>';
+                    } else if (type === 'cascading') {
+                        if (fieldConfig.level === 1) {
+                            html += `<select class="form-select" name="${fieldName}" id="regionSelect" ${required ? 'required' : ''}>`;
+                            html += '<option value="">Select region...</option>';
+                            Object.keys(state.regionDistrictMap).sort().forEach(region => {
+                                html += `<option value="${region}">${region}</option>`;
+                            });
+                            html += '</select>';
+                        } else if (fieldConfig.level === 2) {
+                            html += `<select class="form-select" name="${fieldName}" id="districtSelect" disabled ${required ? 'required' : ''}>`;
+                            html += '<option value="">Select region first...</option>';
+                            html += '</select>';
+                        } else if (fieldConfig.level === 3) {
+                            html += `<select class="form-select" name="${fieldName}" id="chiefdomSelect" disabled ${required ? 'required' : ''}>`;
+                            html += '<option value="">Select district first...</option>';
+                            html += '</select>';
+                        } else if (fieldConfig.level === 4) {
+                            html += `<select class="form-select" name="${fieldName}" id="phuSelect" disabled ${required ? 'required' : ''}>`;
+                            html += '<option value="">Select chiefdom first...</option>';
+                            html += '</select>';
+                        }
+                    } else if (type === 'date') {
+                        html += `<input type="date" class="form-input" name="${fieldName}" ${required ? 'required' : ''}>`;
+                    } else if (type === 'number') {
+                        html += `<input type="number" class="form-input" name="${fieldName}" min="0" step="1" ${required ? 'required' : ''} ${fieldConfig.placeholder ? `placeholder="${fieldConfig.placeholder}"` : ''}>`;
+                    } else if (type === 'textarea') {
+                        html += `<textarea class="form-textarea" name="${fieldName}" rows="4" ${required ? 'required' : ''}></textarea>`;
+                    } else {
+                        html += `<input type="text" class="form-input" name="${fieldName}" ${required ? 'required' : ''} ${fieldConfig.readonly ? 'readonly' : ''} ${fieldConfig.placeholder ? `placeholder="${fieldConfig.placeholder}"` : ''}>`;
+                    }
+                    
+                    html += '</div>';
+                });
+                
+                html += '<div class="navigation-buttons">';
+                
+                if (sectionNum > 1) {
+                    html += '<button type="button" class="btn-nav btn-back" onclick="previousSection()">← BACK</button>';
+                }
+                
+                html += '<button type="button" class="btn-nav btn-draft" onclick="showDraftNameModal()">💾 SAVE DRAFT</button>';
+                
+                if (isLastSection) {
+                    html += '<button type="button" class="btn-nav btn-finalize" id="finalizeBtn" onclick="finalizeForm()">✓ FINALIZE</button>';
+                    html += '<button type="submit" class="btn-nav btn-submit" id="submitBtn" disabled>📤 SUBMIT</button>';
+                } else {
+                    html += '<button type="button" class="btn-nav btn-next" onclick="nextSection()">NEXT →</button>';
+                }
+                
+                html += '</div></div>';
+                
+                sectionNum++;
+            });
+            
+            container.innerHTML = html;
+            updateProgress();
+            
+            setTimeout(() => {
+                initializeSignaturePads();
+                setupCascadingListeners();
+            }, 100);
+        }
+
+        function setupEventListeners() {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+            document.getElementById('viewDataBtn').addEventListener('click', handleViewData);
+            document.getElementById('viewDraftsBtn').addEventListener('click', openDraftsModal);
+            document.getElementById('dataForm').addEventListener('submit', handleFormSubmit);
+            window.addEventListener('online', handleOnlineEvent);
+            window.addEventListener('offline', handleOfflineEvent);
+            
+            document.getElementById('draftNameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    confirmSaveDraft();
+                }
+            });
+        }
+
+        function setupCascadingListeners() {
+            const regionSelect = document.getElementById('regionSelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const chiefdomSelect = document.getElementById('chiefdomSelect');
+            const phuSelect = document.getElementById('phuSelect');
+            
+            if (regionSelect) {
+                regionSelect.addEventListener('change', function() {
+                    const region = this.value;
+                    districtSelect.innerHTML = '<option value="">Select district...</option>';
+                    chiefdomSelect.innerHTML = '<option value="">Select district first...</option>';
+                    phuSelect.innerHTML = '<option value="">Select chiefdom first...</option>';
+                    chiefdomSelect.disabled = true;
+                    phuSelect.disabled = true;
+                    
+                    if (region && state.regionDistrictMap[region]) {
+                        districtSelect.disabled = false;
+                        state.regionDistrictMap[region].sort().forEach(district => {
+                            districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+                        });
+                    } else {
+                        districtSelect.disabled = true;
+                    }
+                });
+            }
+            
+            if (districtSelect) {
+                districtSelect.addEventListener('change', function() {
+                    const district = this.value;
+                    chiefdomSelect.innerHTML = '<option value="">Select chiefdom...</option>';
+                    phuSelect.innerHTML = '<option value="">Select chiefdom first...</option>';
+                    phuSelect.disabled = true;
+                    
+                    if (district && state.districtChiefdomMap[district]) {
+                        chiefdomSelect.disabled = false;
+                        state.districtChiefdomMap[district].sort().forEach(chiefdom => {
+                            chiefdomSelect.innerHTML += `<option value="${chiefdom}">${chiefdom}</option>`;
+                        });
+                    } else {
+                        chiefdomSelect.disabled = true;
+                    }
+                });
+            }
+            
+            if (chiefdomSelect) {
+                chiefdomSelect.addEventListener('change', function() {
+                    const chiefdom = this.value;
+                    phuSelect.innerHTML = '<option value="">Select facility...</option>';
+                    
+                    if (chiefdom && state.chiefdomPHUMap[chiefdom]) {
+                        phuSelect.disabled = false;
+                        state.chiefdomPHUMap[chiefdom].sort().forEach(phu => {
+                            phuSelect.innerHTML += `<option value="${phu}">${phu}</option>`;
+                        });
+                    } else {
+                        phuSelect.disabled = true;
+                    }
+                });
+            }
+            
+            if (phuSelect) {
+                phuSelect.addEventListener('change', function() {
+                    const phu = this.value;
+                    const uidField = document.querySelector('[name="facility_uid"]');
+                    if (uidField && state.phuUIDMap[phu]) {
+                        uidField.value = state.phuUIDMap[phu];
+                    } else if (uidField) {
+                        uidField.value = '';
+                    }
+                });
+            }
+        }
+
+        function selectQuality(btn) {
+            const fieldName = btn.getAttribute('data-field');
+            const value = btn.getAttribute('data-value');
+            
+            const buttons = btn.parentElement.querySelectorAll('.quality-btn');
+            buttons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            
+            document.getElementById(fieldName).value = value;
+        }
+
+        function nextSection() {
+            const currentSectionEl = document.querySelector(`.form-section[data-section="${state.currentSection}"]`);
+            const inputs = currentSectionEl.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const radioGroup = currentSectionEl.querySelectorAll(`input[name="${input.name}"]`);
+                    const anyChecked = Array.from(radioGroup).some(r => r.checked);
+                    if (!anyChecked) {
+                        isValid = false;
+                        radioGroup.forEach(r => r.closest('.radio-option').style.borderColor = '#dc3545');
+                        setTimeout(() => radioGroup.forEach(r => r.closest('.radio-option').style.borderColor = ''), 3000);
+                    }
+                } else if (!input.value) {
+                    isValid = false;
+                    input.style.borderColor = '#dc3545';
+                    setTimeout(() => input.style.borderColor = '', 3000);
+                }
+            });
+            
+            if (!isValid) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (state.currentSection < state.totalSections) {
+                currentSectionEl.classList.remove('active');
+                state.currentSection++;
+                const nextSection = document.querySelector(`.form-section[data-section="${state.currentSection}"]`);
+                if (nextSection) {
+                    nextSection.classList.add('active');
+                    updateProgress();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
+        function previousSection() {
+            if (state.currentSection > 1) {
+                document.querySelector(`.form-section[data-section="${state.currentSection}"]`).classList.remove('active');
+                state.currentSection--;
+                document.querySelector(`.form-section[data-section="${state.currentSection}"]`).classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function updateProgress() {
+            const progress = (state.currentSection / state.totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            let statusBadge = '';
+            if (state.formStatus === 'draft') {
+                statusBadge = '<span class="form-status-badge draft">DRAFT</span>';
+            } else if (state.formStatus === 'finalized') {
+                statusBadge = '<span class="form-status-badge finalized">FINALIZED</span>';
+            }
+            
+            document.getElementById('progressText').innerHTML = `SECTION ${state.currentSection} OF ${state.totalSections} ${statusBadge}`;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            
+            if (username === CONFIG.LOGIN_USERNAME && password === CONFIG.LOGIN_PASSWORD) {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('username', username);
+                state.isLoggedIn = true;
+                errorDiv.classList.remove('show');
+                showMainContent();
+            } else {
+                errorDiv.classList.add('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            state.isLoggedIn = false;
+            document.getElementById('mainContent').classList.remove('show');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function showMainContent() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.add('show');
+            updateOnlineStatus();
+            updatePendingCount();
+            updateDraftCount();
+            
+            if (state.isOnline && state.pendingSubmissions.length > 0) {
+                syncPendingSubmissions();
+            }
+        }
+
+        function handleViewData() {
+            if (CONFIG.GOOGLE_SHEET_URL && CONFIG.GOOGLE_SHEET_URL !== 'YOUR_GOOGLE_SHEET_URL') {
+                window.open(CONFIG.GOOGLE_SHEET_URL, '_blank');
+            } else {
+                showNotification('Please configure Google Sheet URL in the script', 'error');
+            }
+        }
+
+        function handleOnlineEvent() {
+            state.isOnline = true;
+            updateOnlineStatus();
+            showNotification('Back online - Syncing data...', 'info');
+            syncPendingSubmissions();
+        }
+
+        function handleOfflineEvent() {
+            state.isOnline = false;
+            updateOnlineStatus();
+            showNotification('You are offline - Data will be saved locally', 'info');
+        }
+
+        function updateOnlineStatus() {
+            const indicator = document.getElementById('statusIndicator');
+            const text = document.getElementById('statusText');
+            
+            if (state.isOnline) {
+                indicator.className = 'status-indicator online';
+                text.textContent = 'ONLINE';
+            } else {
+                indicator.className = 'status-indicator offline';
+                text.textContent = 'OFFLINE';
+            }
+        }
+
+        function updatePendingCount() {
+            document.getElementById('pendingCount').textContent = state.pendingSubmissions.length;
+        }
+
+        function updateDraftCount() {
+            document.getElementById('draftCount').textContent = state.drafts.length;
+        }
+
+        // ============================================
+        // DRAFT MANAGEMENT
+        // ============================================
+        function showDraftNameModal() {
+            const modal = document.getElementById('draftNameModal');
+            const input = document.getElementById('draftNameInput');
+            
+            if (state.currentDraftName) {
+                input.value = state.currentDraftName;
+            } else {
+                const facilityName = document.querySelector('[name="facility_name"]')?.value || '';
+                const supervisionDate = document.querySelector('[name="supervision_date"]')?.value || '';
+                const defaultName = facilityName || supervisionDate || 'Unnamed Draft';
+                input.value = defaultName;
+            }
+            
+            modal.classList.add('show');
+            input.focus();
+            input.select();
+        }
+
+        function cancelDraftName() {
+            document.getElementById('draftNameModal').classList.remove('show');
+        }
+
+        function confirmSaveDraft() {
+            const draftName = document.getElementById('draftNameInput').value.trim();
+            
+            if (!draftName) {
+                showNotification('Please enter a name for the draft', 'warning');
+                return;
+            }
+            
+            cancelDraftName();
+            saveAsDraft(draftName);
+        }
+
+        function saveAsDraft(draftName) {
+            const formData = new FormData(document.getElementById('dataForm'));
+            
+            const data = {
+                draftId: state.currentDraftId || generateDraftId(),
+                draftName: draftName,
+                savedAt: new Date().toISOString(),
+                savedBy: sessionStorage.getItem('username') || 'admin',
+                formStatus: 'draft',
+                currentSection: state.currentSection
+            };
+            
+            for (const [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            Object.keys(state.signaturePads).forEach(fieldName => {
+                const pad = state.signaturePads[fieldName];
+                if (pad && !pad.isEmpty()) {
+                    data[fieldName] = pad.toDataURL();
+                }
+            });
+            
+            const existingIndex = state.drafts.findIndex(d => d.draftId === data.draftId);
+            if (existingIndex !== -1) {
+                state.drafts[existingIndex] = data;
+            } else {
+                state.drafts.push(data);
+            }
+            
+            localStorage.setItem('supervisionDrafts', JSON.stringify(state.drafts));
+            state.currentDraftId = data.draftId;
+            state.currentDraftName = draftName;
+            document.getElementById('draft_id').value = data.draftId;
+            
+            updateDraftCount();
+            showNotification(`Draft "${draftName}" saved successfully!`, 'success');
+        }
+
+        function generateDraftId() {
+            return 'draft_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function openDraftsModal() {
+            const modal = document.getElementById('draftsModal');
+            const modalBody = document.getElementById('draftsModalBody');
+            
+            if (state.drafts.length === 0) {
+                modalBody.innerHTML = '<div class="no-drafts">No saved drafts</div>';
+            } else {
+                let html = '';
+                const sortedDrafts = [...state.drafts].sort((a, b) => 
+                    new Date(b.savedAt) - new Date(a.savedAt)
+                );
+                
+                sortedDrafts.forEach((draft) => {
+                    const savedDate = new Date(draft.savedAt).toLocaleString();
+                    const draftName = draft.draftName || 'Unnamed Draft';
+                    const facilityName = draft.facility_name || '';
+                    const supervisionDate = draft.supervision_date || '';
+                    
+                    html += `
+                        <div class="draft-item">
+                            <div class="draft-item-header">
+                                <div>
+                                    <div class="draft-item-title">${draftName}</div>
+                                    ${facilityName ? `<div class="draft-item-subtitle">Facility: ${facilityName}</div>` : ''}
+                                    ${supervisionDate ? `<div class="draft-item-subtitle">Date: ${supervisionDate}</div>` : ''}
+                                </div>
+                                <div class="draft-item-date">Saved: ${savedDate}</div>
+                            </div>
+                            <div class="draft-item-actions">
+                                <button class="draft-action-btn load" onclick="loadDraft('${draft.draftId}')">📂 LOAD</button>
+                                <button class="draft-action-btn delete" onclick="deleteDraft('${draft.draftId}')">🗑️ DELETE</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                modalBody.innerHTML = html;
+            }
+            
+            modal.classList.add('show');
+        }
+
+        function closeDraftsModal() {
+            document.getElementById('draftsModal').classList.remove('show');
+        }
+
+        function loadDraft(draftId) {
+            const draft = state.drafts.find(d => d.draftId === draftId);
+            if (!draft) {
+                showNotification('Draft not found', 'error');
+                return;
+            }
+            
+            clearForm(false);
+            
+            state.currentDraftId = draftId;
+            state.currentDraftName = draft.draftName;
+            state.formStatus = draft.formStatus || 'draft';
+            document.getElementById('draft_id').value = draftId;
+            document.getElementById('form_status').value = state.formStatus;
+            
+            Object.keys(draft).forEach(key => {
+                if (['draftId', 'draftName', 'savedAt', 'savedBy', 'formStatus', 'currentSection'].includes(key)) return;
+                
+                const field = document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === 'hidden' && key.includes('signature')) {
+                        const canvas = document.getElementById(`${key}_canvas`);
+                        if (canvas && draft[key]) {
+                            const pad = state.signaturePads[key];
+                            if (pad) {
+                                const img = new Image();
+                                img.onload = () => {
+                                    const ctx = canvas.getContext('2d');
+                                    ctx.drawImage(img, 0, 0);
+                                };
+                                img.src = draft[key];
+                                field.value = draft[key];
+                            }
+                        }
+                    } else if (field.type === 'radio') {
+                        const radios = document.querySelectorAll(`[name="${key}"]`);
+                        radios.forEach(r => {
+                            if (r.value === draft[key]) r.checked = true;
+                        });
+                    } else if (field.type === 'checkbox') {
+                        const checkboxes = document.querySelectorAll(`[name="${key}"]`);
+                        const values = Array.isArray(draft[key]) ? draft[key] : [draft[key]];
+                        checkboxes.forEach(cb => {
+                            if (values.includes(cb.value)) cb.checked = true;
+                        });
+                    } else {
+                        field.value = draft[key];
+                    }
+                }
+                
+                // Handle quality buttons
+                if (key.includes('quality')) {
+                    const hiddenInput = document.getElementById(key);
+                    if (hiddenInput && draft[key]) {
+                        hiddenInput.value = draft[key];
+                        const buttons = document.querySelectorAll(`[data-field="${key}"]`);
+                        buttons.forEach(btn => {
+                            if (btn.getAttribute('data-value') === draft[key]) {
+                                btn.classList.add('selected');
+                            }
+                        });
+                    }
+                }
+            });
+            
+            // Handle cascading dropdowns
+            if (draft.region) {
+                const regionSelect = document.getElementById('regionSelect');
+                if (regionSelect) {
+                    regionSelect.value = draft.region;
+                    regionSelect.dispatchEvent(new Event('change'));
+                    
+                    setTimeout(() => {
+                        if (draft.district) {
+                            const districtSelect = document.getElementById('districtSelect');
+                            if (districtSelect) {
+                                districtSelect.value = draft.district;
+                                districtSelect.dispatchEvent(new Event('change'));
+                                
+                                setTimeout(() => {
+                                    if (draft.chiefdom) {
+                                        const chiefdomSelect = document.getElementById('chiefdomSelect');
+                                        if (chiefdomSelect) {
+                                            chiefdomSelect.value = draft.chiefdom;
+                                            chiefdomSelect.dispatchEvent(new Event('change'));
+                                            
+                                            setTimeout(() => {
+                                                if (draft.facility_name) {
+                                                    const phuSelect = document.getElementById('phuSelect');
+                                                    if (phuSelect) {
+                                                        phuSelect.value = draft.facility_name;
+                                                        phuSelect.dispatchEvent(new Event('change'));
+                                                    }
+                                                }
+                                            }, 100);
+                                        }
+                                    }
+                                }, 100);
+                            }
+                        }
+                    }, 100);
+                }
+            }
+            
+            if (draft.currentSection) {
+                document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+                state.currentSection = draft.currentSection;
+                const targetSection = document.querySelector(`.form-section[data-section="${draft.currentSection}"]`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            }
+            
+            updateProgress();
+            updateSubmitButton();
+            closeDraftsModal();
+            showNotification(`Draft "${draft.draftName}" loaded successfully!`, 'success');
+        }
+
+        function deleteDraft(draftId) {
+            const draft = state.drafts.find(d => d.draftId === draftId);
+            const draftName = draft ? draft.draftName : 'this draft';
+            
+            if (!confirm(`Are you sure you want to delete "${draftName}"?`)) return;
+            
+            state.drafts = state.drafts.filter(d => d.draftId !== draftId);
+            localStorage.setItem('supervisionDrafts', JSON.stringify(state.drafts));
+            
+            if (state.currentDraftId === draftId) {
+                state.currentDraftId = null;
+                state.currentDraftName = null;
+                document.getElementById('draft_id').value = '';
+            }
+            
+            updateDraftCount();
+            openDraftsModal();
+            showNotification('Draft deleted', 'info');
+        }
+
+        // ============================================
+        // FINALIZE & SUBMIT
+        // ============================================
+        function finalizeForm() {
+            let isValid = true;
+            let firstInvalidSection = null;
+            
+            document.querySelectorAll('.form-section').forEach((section, index) => {
+                const inputs = section.querySelectorAll('input[required], select[required], textarea[required]');
+                inputs.forEach(input => {
+                    if (input.type === 'radio') {
+                        const radioGroup = section.querySelectorAll(`input[name="${input.name}"]`);
+                        const anyChecked = Array.from(radioGroup).some(r => r.checked);
+                        if (!anyChecked) {
+                            isValid = false;
+                            if (firstInvalidSection === null) firstInvalidSection = index + 1;
+                        }
+                    } else if (!input.value) {
+                        isValid = false;
+                        if (firstInvalidSection === null) firstInvalidSection = index + 1;
+                    }
+                });
+            });
+            
+            if (!isValid) {
+                showNotification(`Please complete all required fields. Check Section ${firstInvalidSection}`, 'error');
+                document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+                state.currentSection = firstInvalidSection;
+                document.querySelector(`.form-section[data-section="${firstInvalidSection}"]`).classList.add('active');
+                updateProgress();
+                return;
+            }
+            
+            state.formStatus = 'finalized';
+            document.getElementById('form_status').value = 'finalized';
+            updateProgress();
+            updateSubmitButton();
+            
+            if (state.currentDraftName) {
+                saveAsDraft(state.currentDraftName);
+            } else {
+                showDraftNameModal();
+            }
+            
+            showNotification('Form finalized! You can now submit.', 'success');
+        }
+
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            const finalizeBtn = document.getElementById('finalizeBtn');
+            
+            if (state.formStatus === 'finalized') {
+                submitBtn.disabled = false;
+                finalizeBtn.disabled = true;
+                finalizeBtn.textContent = '✓ FINALIZED';
+            } else {
+                submitBtn.disabled = true;
+                finalizeBtn.disabled = false;
+                finalizeBtn.textContent = '✓ FINALIZE';
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (state.formStatus !== 'finalized') {
+                showNotification('Please finalize the form before submitting', 'warning');
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            
+            const data = {
+                timestamp: new Date().toISOString(),
+                submittedBy: sessionStorage.getItem('username') || 'admin',
+                form_status: 'submitted'
+            };
+            
+            for (const [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            if (state.isOnline) {
+                await submitToServer(data);
+            } else {
+                saveOffline(data);
+            }
+        }
+
+        async function submitToServer(data) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SUBMITTING...';
+
+            try {
+                const response = await fetch(CONFIG.SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (state.currentDraftId) {
+                    state.drafts = state.drafts.filter(d => d.draftId !== state.currentDraftId);
+                    localStorage.setItem('supervisionDrafts', JSON.stringify(state.drafts));
+                    updateDraftCount();
+                }
+
+                showNotification('Data submitted successfully!', 'success');
+                clearForm(true);
+                
+            } catch (error) {
+                console.error('Submit error:', error);
+                showNotification('Failed to submit - Saved offline', 'error');
+                saveOffline(data);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 SUBMIT';
+            }
+        }
+
+        function saveOffline(data) {
+            state.pendingSubmissions.push(data);
+            localStorage.setItem('supervisionPending', JSON.stringify(state.pendingSubmissions));
+            
+            if (state.currentDraftId) {
+                state.drafts = state.drafts.filter(d => d.draftId !== state.currentDraftId);
+                localStorage.setItem('supervisionDrafts', JSON.stringify(state.drafts));
+                updateDraftCount();
+            }
+            
+            updatePendingCount();
+            showNotification('Data saved offline - Will sync when online', 'info');
+            clearForm(true);
+        }
+
+        async function syncPendingSubmissions() {
+            if (state.pendingSubmissions.length === 0) return;
+
+            showNotification('Syncing pending submissions...', 'info');
+            const successfulSyncs = [];
+            
+            for (let i = 0; i < state.pendingSubmissions.length; i++) {
+                try {
+                    await fetch(CONFIG.SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(state.pendingSubmissions[i])
+                    });
+                    successfulSyncs.push(i);
+                } catch (error) {
+                    console.error('Sync error:', error);
+                }
+            }
+
+            if (successfulSyncs.length > 0) {
+                state.pendingSubmissions = state.pendingSubmissions.filter((_, index) => 
+                    !successfulSyncs.includes(index)
+                );
+                localStorage.setItem('supervisionPending', JSON.stringify(state.pendingSubmissions));
+                updatePendingCount();
+                showNotification(`Successfully synced ${successfulSyncs.length} submission(s)`, 'success');
+            }
+        }
+
+        function clearForm(resetStatus = true) {
+            document.getElementById('dataForm').reset();
+            
+            Object.keys(state.signaturePads).forEach(fieldName => {
+                clearSignature(fieldName);
+            });
+            
+            // Clear quality buttons
+            document.querySelectorAll('.quality-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            state.gpsLocation = null;
+            const gpsIcon = document.getElementById('gps_icon');
+            const gpsStatus = document.getElementById('gps_status');
+            const gpsCoords = document.getElementById('gps_coords');
+            const gpsBtn = document.getElementById('gps_capture_btn');
+            
+            if (gpsIcon) gpsIcon.className = 'gps-icon';
+            if (gpsStatus) gpsStatus.textContent = 'Click button to capture GPS location';
+            if (gpsCoords) gpsCoords.textContent = '';
+            if (gpsBtn) gpsBtn.textContent = '📍 CAPTURE GPS LOCATION';
+            
+            const districtSelect = document.getElementById('districtSelect');
+            const chiefdomSelect = document.getElementById('chiefdomSelect');
+            const phuSelect = document.getElementById('phuSelect');
+            
+            if (districtSelect) {
+                districtSelect.innerHTML = '<option value="">Select region first...</option>';
+                districtSelect.disabled = true;
+            }
+            if (chiefdomSelect) {
+                chiefdomSelect.innerHTML = '<option value="">Select district first...</option>';
+                chiefdomSelect.disabled = true;
+            }
+            if (phuSelect) {
+                phuSelect.innerHTML = '<option value="">Select chiefdom first...</option>';
+                phuSelect.disabled = true;
+            }
+            
+            if (resetStatus) {
+                state.formStatus = 'draft';
+                state.currentDraftId = null;
+                state.currentDraftName = null;
+                document.getElementById('form_status').value = 'draft';
+                document.getElementById('draft_id').value = '';
+            }
+            
+            state.currentSection = 1;
+            document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+            const section1 = document.querySelector('.form-section[data-section="1"]');
+            if (section1) {
+                section1.classList.add('active');
+            }
+            
+            updateProgress();
+            updateSubmitButton();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                initializeSignaturePads();
+            }, 100);
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const text = document.getElementById('notificationText');
+            
+            notification.className = `notification ${type} show`;
+            text.textContent = message;
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // ============================================
+        // SIGNATURE PAD FUNCTIONS
+        // ============================================
+        function initializeSignaturePads() {
+            const canvases = document.querySelectorAll('.signature-canvas');
+            
+            canvases.forEach(canvas => {
+                const fieldName = canvas.getAttribute('data-field');
+                
+                const container = canvas.parentElement;
+                canvas.width = container.offsetWidth - 20;
+                canvas.height = 150;
+                
+                const signaturePad = new SignaturePad(canvas, {
+                    backgroundColor: 'rgb(255, 255, 255)',
+                    penColor: 'rgb(0, 0, 0)',
+                    minWidth: 1,
+                    maxWidth: 3
+                });
+                
+                state.signaturePads[fieldName] = signaturePad;
+                
+                signaturePad.addEventListener('endStroke', () => {
+                    const hiddenInput = document.getElementById(fieldName);
+                    if (hiddenInput) {
+                        hiddenInput.value = signaturePad.toDataURL();
+                    }
+                });
+            });
+        }
+
+        function clearSignature(fieldName) {
+            const signaturePad = state.signaturePads[fieldName];
+            if (signaturePad) {
+                signaturePad.clear();
+                const hiddenInput = document.getElementById(fieldName);
+                if (hiddenInput) {
+                    hiddenInput.value = '';
+                }
+            }
+        }
+
+        // ============================================
+        // GPS FUNCTIONS
+        // ============================================
+        function captureGPS() {
+            const statusIcon = document.getElementById('gps_icon');
+            const statusText = document.getElementById('gps_status');
+            const coordsText = document.getElementById('gps_coords');
+            const captureBtn = document.getElementById('gps_capture_btn');
+            
+            if (!navigator.geolocation) {
+                showNotification('GPS not supported by your browser', 'error');
+                if (statusIcon) statusIcon.classList.add('error');
+                if (statusText) statusText.textContent = 'GPS not supported';
+                return;
+            }
+            
+            if (statusIcon) {
+                statusIcon.classList.remove('success', 'error');
+                statusIcon.classList.add('loading');
+            }
+            if (statusText) statusText.textContent = 'Capturing GPS location...';
+            if (captureBtn) {
+                captureBtn.disabled = true;
+                captureBtn.textContent = '⏳ CAPTURING...';
+            }
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    const timestamp = new Date(position.timestamp).toISOString();
+                    
+                    state.gpsLocation = { latitude, longitude, accuracy, timestamp };
+                    
+                    const latInput = document.getElementById('gps_latitude');
+                    const lonInput = document.getElementById('gps_longitude');
+                    const accInput = document.getElementById('gps_accuracy');
+                    const timeInput = document.getElementById('gps_timestamp');
+                    
+                    if (latInput) latInput.value = latitude;
+                    if (lonInput) lonInput.value = longitude;
+                    if (accInput) accInput.value = accuracy;
+                    if (timeInput) timeInput.value = timestamp;
+                    
+                    if (statusIcon) {
+                        statusIcon.classList.remove('loading', 'error');
+                        statusIcon.classList.add('success');
+                    }
+                    if (statusText) statusText.textContent = 'GPS location captured successfully!';
+                    if (coordsText) coordsText.textContent = `Lat: ${latitude.toFixed(6)}, Lon: ${longitude.toFixed(6)} (±${Math.round(accuracy)}m)`;
+                    if (captureBtn) {
+                        captureBtn.disabled = false;
+                        captureBtn.textContent = '✓ GPS CAPTURED';
+                    }
+                    
+                    showNotification('GPS location captured successfully', 'success');
+                },
+                (error) => {
+                    if (statusIcon) {
+                        statusIcon.classList.remove('loading', 'success');
+                        statusIcon.classList.add('error');
+                    }
+                    
+                    let errorMessage = 'Failed to capture GPS location';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = 'GPS permission denied. Please enable location access.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = 'GPS position unavailable. Please try again.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = 'GPS request timed out. Please try again.';
+                            break;
+                    }
+                    
+                    if (statusText) statusText.textContent = errorMessage;
+                    if (captureBtn) {
+                        captureBtn.disabled = false;
+                        captureBtn.textContent = '📍 TRY AGAIN';
+                    }
+                    
+                    showNotification(errorMessage, 'error');
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 120000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // Close modals
+        document.getElementById('draftsModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDraftsModal();
+        });
+
+        document.getElementById('draftNameModal').addEventListener('click', function(e) {
+            if (e.target === this) cancelDraftName();
+        });
+
+        init();
+    </script>
+</body>
+</html>
