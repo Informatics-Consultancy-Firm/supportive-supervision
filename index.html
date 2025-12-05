@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     
+    <!-- External JS Files -->
+    <script src="config.js"></script>
+    <script src="cascading-data.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="report.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -1076,6 +1082,365 @@
             border-color: #e0a800;
         }
 
+        /* Dashboard & Report Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2500;
+            padding: 20px;
+        }
+
+        .modal .modal-content {
+            background: #ffffff;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 4px double #004080;
+        }
+
+        .modal .modal-content.modal-large {
+            max-width: 900px;
+        }
+
+        .modal .modal-header {
+            background: #004080;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal .modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal .modal-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .modal .modal-body {
+            padding: 20px;
+        }
+
+        .modal .modal-footer {
+            padding: 15px 20px;
+            border-top: 2px solid #004080;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid;
+        }
+
+        .modal .btn-primary {
+            background: #004080;
+            color: #ffffff;
+            border-color: #004080;
+        }
+
+        .modal .btn-primary:hover {
+            background: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .modal .btn-secondary {
+            background: #ffffff;
+            color: #004080;
+            border-color: #004080;
+        }
+
+        .modal .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .modal .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            padding: 10px 0;
+        }
+
+        .dashboard-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #004080;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 25px;
+        }
+
+        .dashboard-section h3 {
+            font-size: 14px;
+            color: #004080;
+            border-bottom: 2px solid #004080;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+
+        .bar-label {
+            font-size: 12px;
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #004080, #0056b3);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .bar-value {
+            font-size: 12px;
+            width: 30px;
+            text-align: right;
+            color: #004080;
+            font-weight: 700;
+        }
+
+        .quality-chart {
+            display: flex;
+            height: 40px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 2px solid #004080;
+        }
+
+        .quality-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            min-width: 0;
+            transition: flex 0.3s ease;
+        }
+
+        .quality-bar.excellent {
+            background: #28a745;
+        }
+
+        .quality-bar.acceptable {
+            background: #ffc107;
+            color: #000000;
+        }
+
+        .quality-bar.needs-improvement {
+            background: #dc3545;
+        }
+
+        .dashboard-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .dashboard-section th,
+        .dashboard-section td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dashboard-section th {
+            background: #f8f9fa;
+            color: #004080;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        /* Report Styles */
+        .report-options {
+            padding: 10px 0;
+        }
+
+        .report-options .form-group {
+            margin-bottom: 20px;
+        }
+
+        .report-options label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .report-options .form-control {
+            width: 100%;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 6px;
+            font-family: 'Oswald', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .report-options .date-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .report-options .date-range input {
+            flex: 1;
+        }
+
+        .report-output {
+            padding: 10px 0;
+        }
+
+        .report-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #004080;
+        }
+
+        .report-header h3 {
+            color: #004080;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .report-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .report-body {
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .report-body h3,
+        .report-body h4,
+        .report-body h5 {
+            color: #004080;
+            margin: 20px 0 10px 0;
+        }
+
+        .report-body p {
+            margin-bottom: 15px;
+        }
+
+        .report-body ul {
+            margin: 10px 0 15px 20px;
+        }
+
+        .report-body li {
+            margin-bottom: 8px;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .loading-spinner p {
+            margin: 10px 0;
+        }
+
+        .loading-note {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fff5f5;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            padding: 20px;
+            color: #dc3545;
+        }
+
+        .error-message h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .error-message ul {
+            margin: 10px 0 0 20px;
+        }
+
         /* Form Status Badge */
         .form-status-badge {
             display: inline-block;
@@ -1200,6 +1565,8 @@
             <!-- CONTROLS -->
             <div class="controls-bar">
                 <button class="control-btn" id="viewDataBtn">📊 VIEW DATA</button>
+                <button class="control-btn" id="dashboardBtn">📈 DASHBOARD</button>
+                <button class="control-btn" id="reportBtn">📄 REPORT</button>
                 <button class="control-btn draft-btn" id="viewDraftsBtn">📝 VIEW DRAFTS</button>
                 <button class="control-btn" id="logoutBtn">LOGOUT</button>
             </div>
@@ -1283,61 +1650,14 @@
 
     <script>
         // ============================================
-        // CONFIGURATION
+        // CONFIGURATION - Loaded from config.js
         // ============================================
-        const CONFIG = {
-            SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
-            GOOGLE_SHEET_URL: 'YOUR_GOOGLE_SHEET_URL',
-            LOGIN_USERNAME: 'admin',
-            LOGIN_PASSWORD: 'admin'
-        };
+        // CONFIG object is loaded from external config.js file
 
         // ============================================
-        // CASCADING DATA FOR SIERRA LEONE
+        // CASCADING DATA - Loaded from cascading-data.js
         // ============================================
-        const CASCADING_DATA = `Eastern Region||Kailahun District
-Eastern Region||Kenema District
-Eastern Region||Kono District
-Northern Region||Bombali District
-Northern Region||Falaba District
-Northern Region||Koinadugu District
-Northern Region||Tonkolili District
-North West Region||Kambia District
-North West Region||Karene District
-North West Region||Port Loko District
-Southern Region||Bo District
-Southern Region||Bonthe District
-Southern Region||Moyamba District
-Southern Region||Pujehun District
-Western Area||Western Area Urban District
-Western Area||Western Area Rural District
-Bo District||Bo City
-Bo District||Badjia Chiefdom
-Bo District||Bagbwe Chiefdom
-Bo District||Baoma Chiefdom
-Bo District||Bargbo Chiefdom
-Kailahun District||Dea Chiefdom
-Kailahun District||Luawa Chiefdom
-Kailahun District||Jawei Chiefdom
-Kenema District||Kenema City
-Kenema District||Nongowa Chiefdom
-Kenema District||Small Bo Chiefdom
-Bombali District||Makeni City
-Bombali District||Bombali Sebora Chiefdom
-Tonkolili District||Kunike Barina Chiefdom
-Tonkolili District||Yoni Mabanta Chiefdom
-Port Loko District||Port Loko City
-Port Loko District||Maforki Chiefdom
-Western Area Urban District||Central 1 Zone
-Western Area Urban District||East 1 Zone
-Western Area Urban District||West 1 Zone
-Western Area Rural District||Waterloo Rural Zone
-Western Area Rural District||Koya Rural Zone
-Badjia Chiefdom||Badjia CHC||PHU001
-Bo City||Bo Government Hospital||PHU002
-Dea Chiefdom||Dea CHC||PHU003
-Luawa Chiefdom||Kailahun Government Hospital||PHU004
-Kenema City||Kenema Government Hospital||PHU005`;
+        // CASCADING_DATA and parseCascadingData() are loaded from external cascading-data.js file
 
         // ============================================
         // FORM SECTIONS DEFINITION
@@ -1535,30 +1855,18 @@ Kenema City||Kenema Government Hospital||PHU005`;
         }
 
         function parseCascadingData() {
-            const lines = CASCADING_DATA.trim().split('\n');
+            // Use the external parseCascadingData function from cascading-data.js
+            const parsed = window.parseCascadingData ? window.parseCascadingData() : {
+                regionDistrictMap: {},
+                districtChiefdomMap: {},
+                chiefdomPHUMap: {},
+                phuUIDMap: {}
+            };
             
-            lines.forEach(line => {
-                const parts = line.split('||');
-                if (parts.length === 2) {
-                    const [parent, child] = parts.map(s => s.trim());
-                    
-                    if (parent.includes('Region') || parent === 'Western Area') {
-                        if (!state.regionDistrictMap[parent]) state.regionDistrictMap[parent] = [];
-                        if (!state.regionDistrictMap[parent].includes(child)) state.regionDistrictMap[parent].push(child);
-                    } else if (parent.includes('District')) {
-                        if (!state.districtChiefdomMap[parent]) state.districtChiefdomMap[parent] = [];
-                        if (!state.districtChiefdomMap[parent].includes(child)) state.districtChiefdomMap[parent].push(child);
-                    } else {
-                        if (!state.chiefdomPHUMap[parent]) state.chiefdomPHUMap[parent] = [];
-                        if (!state.chiefdomPHUMap[parent].includes(child)) state.chiefdomPHUMap[parent].push(child);
-                    }
-                } else if (parts.length === 3) {
-                    const [chiefdom, phu, uid] = parts.map(s => s.trim());
-                    if (!state.chiefdomPHUMap[chiefdom]) state.chiefdomPHUMap[chiefdom] = [];
-                    if (!state.chiefdomPHUMap[chiefdom].includes(phu)) state.chiefdomPHUMap[chiefdom].push(phu);
-                    state.phuUIDMap[phu] = uid;
-                }
-            });
+            state.regionDistrictMap = parsed.regionDistrictMap;
+            state.districtChiefdomMap = parsed.districtChiefdomMap;
+            state.chiefdomPHUMap = parsed.chiefdomPHUMap;
+            state.phuUIDMap = parsed.phuUIDMap;
         }
 
         function generateFormSections() {
@@ -1759,6 +2067,8 @@ Kenema City||Kenema Government Hospital||PHU005`;
             document.getElementById('logoutBtn').addEventListener('click', handleLogout);
             document.getElementById('viewDataBtn').addEventListener('click', handleViewData);
             document.getElementById('viewDraftsBtn').addEventListener('click', openDraftsModal);
+            document.getElementById('dashboardBtn').addEventListener('click', handleDashboard);
+            document.getElementById('reportBtn').addEventListener('click', handleReport);
             document.getElementById('dataForm').addEventListener('submit', handleFormSubmit);
             window.addEventListener('online', handleOnlineEvent);
             window.addEventListener('offline', handleOfflineEvent);
@@ -1768,6 +2078,24 @@ Kenema City||Kenema Government Hospital||PHU005`;
                     confirmSaveDraft();
                 }
             });
+        }
+        
+        // Dashboard handler
+        function handleDashboard() {
+            if (typeof Dashboard !== 'undefined' && Dashboard.show) {
+                Dashboard.show();
+            } else {
+                showNotification('Dashboard module not loaded', 'error');
+            }
+        }
+        
+        // Report handler
+        function handleReport() {
+            if (typeof Report !== 'undefined' && Report.show) {
+                Report.show();
+            } else {
+                showNotification('Report module not loaded', 'error');
+            }
         }
 
         function setupCascadingListeners() {
