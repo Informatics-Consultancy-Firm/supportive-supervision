@@ -211,12 +211,15 @@ function getSupervisionData() {
   for (let i = 1; i < data.length; i++) {
     const row = {};
     for (let j = 0; j < headers.length; j++) {
-      row[headers[j]] = data[i][j];
+      // Convert header to snake_case for consistency
+      const key = headers[j].toLowerCase().replace(/\s+/g, '_');
+      row[key] = data[i][j];
     }
     result.push(row);
   }
   
-  return ContentService.createTextOutput(JSON.stringify(result))
+  // Return wrapped in { data: ... } format for dashboard.js compatibility
+  return ContentService.createTextOutput(JSON.stringify({ data: result }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
