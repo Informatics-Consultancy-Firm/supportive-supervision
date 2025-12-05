@@ -1,4 +1,4 @@
-// ============================================     
+// ============================================
 // CASCADING DATA FOR SIERRA LEONE
 // Format: Region||District||Chiefdom||PHU||UID
 // ============================================
@@ -1908,13 +1908,21 @@ function parseCascadingData() {
                 if (!regionDistrictMap[parent].includes(child)) {
                     regionDistrictMap[parent].push(child);
                 }
-            } else {
-                // It's a district -> chiefdom mapping
+            } else if (parent.includes('District')) {
+                // District -> Chiefdom mapping
                 if (!districtChiefdomMap[parent]) {
                     districtChiefdomMap[parent] = [];
                 }
                 if (!districtChiefdomMap[parent].includes(child)) {
                     districtChiefdomMap[parent].push(child);
+                }
+            } else {
+                // Chiefdom -> PHU mapping (without UID)
+                if (!chiefdomPHUMap[parent]) {
+                    chiefdomPHUMap[parent] = [];
+                }
+                if (!chiefdomPHUMap[parent].includes(child)) {
+                    chiefdomPHUMap[parent].push(child);
                 }
             }
         } else if (parts.length === 3) {
@@ -1928,8 +1936,8 @@ function parseCascadingData() {
                 chiefdomPHUMap[chiefdom].push(phu);
             }
             
-            // Store PHU -> UID mapping
-            phuUIDMap[`${chiefdom}||${phu}`] = uid;
+            // Store PHU -> UID mapping (using PHU name as key)
+            phuUIDMap[phu] = uid;
         }
     });
     
