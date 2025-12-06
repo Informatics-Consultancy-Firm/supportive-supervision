@@ -1,4 +1,4 @@
-<!DOCTYPE html>             
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1650,14 +1650,89 @@
 
     <script>
         // ============================================
-        // CONFIGURATION - Loaded from config.js
+        // CONFIGURATION
         // ============================================
-        // CONFIG object is loaded from external config.js file
+        // Define default CONFIG (external config.js can override this)
+        var CONFIG = window.CONFIG || {
+            SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
+            GOOGLE_SHEET_URL: 'YOUR_GOOGLE_SHEET_URL',
+            SHEET_ID: 'YOUR_GOOGLE_SHEET_ID',
+            SHEET_NAME: 'Submissions',
+            CLAUDE_API_KEY: 'YOUR_CLAUDE_API_KEY',
+            LOGIN_USERNAME: 'admin',
+            LOGIN_PASSWORD: 'admin'
+        };
+        
+        // Debug: Log CONFIG status
+        console.log('CONFIG loaded:', CONFIG);
+        console.log('Login credentials:', CONFIG.LOGIN_USERNAME, '/', CONFIG.LOGIN_PASSWORD);
 
         // ============================================
         // CASCADING DATA - Loaded from cascading-data.js
         // ============================================
-        // CASCADING_DATA and parseCascadingData() are loaded from external cascading-data.js file
+        // Fallback CASCADING_DATA if external file doesn't load
+        if (typeof CASCADING_DATA === 'undefined') {
+            var CASCADING_DATA = `Eastern Region||Kailahun District
+Eastern Region||Kenema District
+Eastern Region||Kono District
+Northern Region||Bombali District
+Northern Region||Falaba District
+Northern Region||Koinadugu District
+Northern Region||Tonkolili District
+North West Region||Kambia District
+North West Region||Karene District
+North West Region||Port Loko District
+Southern Region||Bo District
+Southern Region||Bonthe District
+Southern Region||Moyamba District
+Southern Region||Pujehun District
+Western Area||Western Area Urban District
+Western Area||Western Area Rural District
+Bo District||Bo City
+Bo District||Badjia Chiefdom
+Bo District||Bagbwe Chiefdom
+Badjia Chiefdom||Ngelehun (Badjia) CHC||xxAfuLUYASs
+Badjia Chiefdom||Njagbahun (Badjia) MCHP||cOJo1p4XAxY
+Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
+        }
+        
+        // Fallback parseCascadingData if external file doesn't load
+        if (typeof window.parseCascadingData !== 'function') {
+            window.parseCascadingData = function() {
+                const regionDistrictMap = {};
+                const districtChiefdomMap = {};
+                const chiefdomPHUMap = {};
+                const phuUIDMap = {};
+                
+                const lines = CASCADING_DATA.trim().split('\n');
+                
+                lines.forEach(line => {
+                    const parts = line.split('||');
+                    
+                    if (parts.length === 2) {
+                        const [parent, child] = parts.map(s => s.trim());
+                        
+                        if (parent.includes('Region') || parent === 'Western Area') {
+                            if (!regionDistrictMap[parent]) regionDistrictMap[parent] = [];
+                            if (!regionDistrictMap[parent].includes(child)) regionDistrictMap[parent].push(child);
+                        } else if (parent.includes('District')) {
+                            if (!districtChiefdomMap[parent]) districtChiefdomMap[parent] = [];
+                            if (!districtChiefdomMap[parent].includes(child)) districtChiefdomMap[parent].push(child);
+                        } else {
+                            if (!chiefdomPHUMap[parent]) chiefdomPHUMap[parent] = [];
+                            if (!chiefdomPHUMap[parent].includes(child)) chiefdomPHUMap[parent].push(child);
+                        }
+                    } else if (parts.length === 3) {
+                        const [chiefdom, phu, uid] = parts.map(s => s.trim());
+                        if (!chiefdomPHUMap[chiefdom]) chiefdomPHUMap[chiefdom] = [];
+                        if (!chiefdomPHUMap[chiefdom].includes(phu)) chiefdomPHUMap[chiefdom].push(phu);
+                        phuUIDMap[phu] = uid;
+                    }
+                });
+                
+                return { regionDistrictMap, districtChiefdomMap, chiefdomPHUMap, phuUIDMap };
+            };
+        }
 
         // ============================================
         // FORM SECTIONS DEFINITION
@@ -1833,25 +1908,41 @@
         // INITIALIZATION
         // ============================================
         function init() {
-            const savedPending = localStorage.getItem('supervisionPending');
-            if (savedPending) {
-                try { state.pendingSubmissions = JSON.parse(savedPending); } catch (e) { state.pendingSubmissions = []; }
-            }
+            try {
+                console.log('Initializing...');
+                
+                const savedPending = localStorage.getItem('supervisionPending');
+                if (savedPending) {
+                    try { state.pendingSubmissions = JSON.parse(savedPending); } catch (e) { state.pendingSubmissions = []; }
+                }
 
-            const savedDrafts = localStorage.getItem('supervisionDrafts');
-            if (savedDrafts) {
-                try { state.drafts = JSON.parse(savedDrafts); } catch (e) { state.drafts = []; }
-            }
+                const savedDrafts = localStorage.getItem('supervisionDrafts');
+                if (savedDrafts) {
+                    try { state.drafts = JSON.parse(savedDrafts); } catch (e) { state.drafts = []; }
+                }
 
-            state.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-            parseCascadingData();
-            
-            if (state.isLoggedIn) {
-                showMainContent();
-            }
+                state.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+                console.log('isLoggedIn from session:', state.isLoggedIn);
+                
+                parseCascadingData();
+                console.log('Cascading data parsed');
+                
+                if (state.isLoggedIn) {
+                    console.log('User already logged in, showing main content');
+                    showMainContent();
+                }
 
-            setupEventListeners();
-            generateFormSections();
+                setupEventListeners();
+                console.log('Event listeners set up');
+                
+                generateFormSections();
+                console.log('Form sections generated');
+                
+                console.log('Initialization complete');
+            } catch (error) {
+                console.error('Initialization error:', error);
+                alert('Initialization error: ' + error.message);
+            }
         }
 
         function parseCascadingData() {
@@ -2081,7 +2172,7 @@
         }
         
         // Dashboard handler
-        function handleDashboard() {  
+        function handleDashboard() {
             if (typeof Dashboard !== 'undefined' && Dashboard.show) {
                 Dashboard.show();
             } else {
@@ -2251,13 +2342,26 @@
             const password = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('loginError');
             
+            // Debug: Log login attempt
+            console.log('Login attempt:', username, password);
+            console.log('Expected:', CONFIG.LOGIN_USERNAME, CONFIG.LOGIN_PASSWORD);
+            
             if (username === CONFIG.LOGIN_USERNAME && password === CONFIG.LOGIN_PASSWORD) {
-                sessionStorage.setItem('isLoggedIn', 'true');
-                sessionStorage.setItem('username', username);
+                console.log('Login successful');
+                alert('Login successful! Click OK to continue.'); // Debug alert
+                
+                try {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('username', username);
+                } catch (storageError) {
+                    console.error('SessionStorage error:', storageError);
+                }
+                
                 state.isLoggedIn = true;
                 errorDiv.classList.remove('show');
                 showMainContent();
             } else {
+                console.log('Login failed - credentials do not match');
                 errorDiv.classList.add('show');
             }
         }
@@ -2273,14 +2377,21 @@
         }
 
         function showMainContent() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainContent').classList.add('show');
-            updateOnlineStatus();
-            updatePendingCount();
-            updateDraftCount();
-            
-            if (state.isOnline && state.pendingSubmissions.length > 0) {
-                syncPendingSubmissions();
+            console.log('showMainContent called');
+            try {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').classList.add('show');
+                console.log('Main content should now be visible');
+                updateOnlineStatus();
+                updatePendingCount();
+                updateDraftCount();
+                
+                if (state.isOnline && state.pendingSubmissions.length > 0) {
+                    syncPendingSubmissions();
+                }
+            } catch (error) {
+                console.error('Error in showMainContent:', error);
+                alert('Error showing main content: ' + error.message);
             }
         }
 
