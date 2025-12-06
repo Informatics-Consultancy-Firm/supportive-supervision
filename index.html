@@ -7,12 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     
-    <!-- External JS Files -->
-    <script src="config.js"></script>
-    <script src="cascading-data.js"></script>
-    <script src="dashboard.js"></script>
-    <script src="report.js"></script>
-    
     <style>
         * {
             margin: 0;
@@ -1652,8 +1646,7 @@
         // ============================================
         // CONFIGURATION
         // ============================================
-        // Define default CONFIG (external config.js can override this)
-        var CONFIG = window.CONFIG || {
+        const CONFIG = {
             SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL',
             GOOGLE_SHEET_URL: 'YOUR_GOOGLE_SHEET_URL',
             SHEET_ID: 'YOUR_GOOGLE_SHEET_ID',
@@ -1662,17 +1655,11 @@
             LOGIN_USERNAME: 'admin',
             LOGIN_PASSWORD: 'admin'
         };
-        
-        // Debug: Log CONFIG status
-        console.log('CONFIG loaded:', CONFIG);
-        console.log('Login credentials:', CONFIG.LOGIN_USERNAME, '/', CONFIG.LOGIN_PASSWORD);
 
         // ============================================
-        // CASCADING DATA - Loaded from cascading-data.js
+        // CASCADING DATA
         // ============================================
-        // Fallback CASCADING_DATA if external file doesn't load
-        if (typeof CASCADING_DATA === 'undefined') {
-            var CASCADING_DATA = `Eastern Region||Kailahun District
+        const CASCADING_DATA = `Eastern Region||Kailahun District
 Eastern Region||Kenema District
 Eastern Region||Kono District
 Northern Region||Bombali District
@@ -1694,45 +1681,6 @@ Bo District||Bagbwe Chiefdom
 Badjia Chiefdom||Ngelehun (Badjia) CHC||xxAfuLUYASs
 Badjia Chiefdom||Njagbahun (Badjia) MCHP||cOJo1p4XAxY
 Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
-        }
-        
-        // Fallback parseCascadingData if external file doesn't load
-        if (typeof window.parseCascadingData !== 'function') {
-            window.parseCascadingData = function() {
-                const regionDistrictMap = {};
-                const districtChiefdomMap = {};
-                const chiefdomPHUMap = {};
-                const phuUIDMap = {};
-                
-                const lines = CASCADING_DATA.trim().split('\n');
-                
-                lines.forEach(line => {
-                    const parts = line.split('||');
-                    
-                    if (parts.length === 2) {
-                        const [parent, child] = parts.map(s => s.trim());
-                        
-                        if (parent.includes('Region') || parent === 'Western Area') {
-                            if (!regionDistrictMap[parent]) regionDistrictMap[parent] = [];
-                            if (!regionDistrictMap[parent].includes(child)) regionDistrictMap[parent].push(child);
-                        } else if (parent.includes('District')) {
-                            if (!districtChiefdomMap[parent]) districtChiefdomMap[parent] = [];
-                            if (!districtChiefdomMap[parent].includes(child)) districtChiefdomMap[parent].push(child);
-                        } else {
-                            if (!chiefdomPHUMap[parent]) chiefdomPHUMap[parent] = [];
-                            if (!chiefdomPHUMap[parent].includes(child)) chiefdomPHUMap[parent].push(child);
-                        }
-                    } else if (parts.length === 3) {
-                        const [chiefdom, phu, uid] = parts.map(s => s.trim());
-                        if (!chiefdomPHUMap[chiefdom]) chiefdomPHUMap[chiefdom] = [];
-                        if (!chiefdomPHUMap[chiefdom].includes(phu)) chiefdomPHUMap[chiefdom].push(phu);
-                        phuUIDMap[phu] = uid;
-                    }
-                });
-                
-                return { regionDistrictMap, districtChiefdomMap, chiefdomPHUMap, phuUIDMap };
-            };
-        }
 
         // ============================================
         // FORM SECTIONS DEFINITION
@@ -1908,56 +1856,64 @@ Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
         // INITIALIZATION
         // ============================================
         function init() {
-            try {
-                console.log('Initializing...');
-                
-                const savedPending = localStorage.getItem('supervisionPending');
-                if (savedPending) {
-                    try { state.pendingSubmissions = JSON.parse(savedPending); } catch (e) { state.pendingSubmissions = []; }
-                }
-
-                const savedDrafts = localStorage.getItem('supervisionDrafts');
-                if (savedDrafts) {
-                    try { state.drafts = JSON.parse(savedDrafts); } catch (e) { state.drafts = []; }
-                }
-
-                state.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-                console.log('isLoggedIn from session:', state.isLoggedIn);
-                
-                parseCascadingData();
-                console.log('Cascading data parsed');
-                
-                if (state.isLoggedIn) {
-                    console.log('User already logged in, showing main content');
-                    showMainContent();
-                }
-
-                setupEventListeners();
-                console.log('Event listeners set up');
-                
-                generateFormSections();
-                console.log('Form sections generated');
-                
-                console.log('Initialization complete');
-            } catch (error) {
-                console.error('Initialization error:', error);
-                alert('Initialization error: ' + error.message);
+            const savedPending = localStorage.getItem('supervisionPending');
+            if (savedPending) {
+                try { state.pendingSubmissions = JSON.parse(savedPending); } catch (e) { state.pendingSubmissions = []; }
             }
+
+            const savedDrafts = localStorage.getItem('supervisionDrafts');
+            if (savedDrafts) {
+                try { state.drafts = JSON.parse(savedDrafts); } catch (e) { state.drafts = []; }
+            }
+
+            state.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            
+            parseCascadingData();
+            
+            if (state.isLoggedIn) {
+                showMainContent();
+            }
+
+            setupEventListeners();
+            generateFormSections();
         }
 
         function parseCascadingData() {
-            // Use the external parseCascadingData function from cascading-data.js
-            const parsed = window.parseCascadingData ? window.parseCascadingData() : {
-                regionDistrictMap: {},
-                districtChiefdomMap: {},
-                chiefdomPHUMap: {},
-                phuUIDMap: {}
-            };
+            const regionDistrictMap = {};
+            const districtChiefdomMap = {};
+            const chiefdomPHUMap = {};
+            const phuUIDMap = {};
             
-            state.regionDistrictMap = parsed.regionDistrictMap;
-            state.districtChiefdomMap = parsed.districtChiefdomMap;
-            state.chiefdomPHUMap = parsed.chiefdomPHUMap;
-            state.phuUIDMap = parsed.phuUIDMap;
+            const lines = CASCADING_DATA.trim().split('\n');
+            
+            lines.forEach(line => {
+                const parts = line.split('||');
+                
+                if (parts.length === 2) {
+                    const [parent, child] = parts.map(s => s.trim());
+                    
+                    if (parent.includes('Region') || parent === 'Western Area') {
+                        if (!regionDistrictMap[parent]) regionDistrictMap[parent] = [];
+                        if (!regionDistrictMap[parent].includes(child)) regionDistrictMap[parent].push(child);
+                    } else if (parent.includes('District')) {
+                        if (!districtChiefdomMap[parent]) districtChiefdomMap[parent] = [];
+                        if (!districtChiefdomMap[parent].includes(child)) districtChiefdomMap[parent].push(child);
+                    } else {
+                        if (!chiefdomPHUMap[parent]) chiefdomPHUMap[parent] = [];
+                        if (!chiefdomPHUMap[parent].includes(child)) chiefdomPHUMap[parent].push(child);
+                    }
+                } else if (parts.length === 3) {
+                    const [chiefdom, phu, uid] = parts.map(s => s.trim());
+                    if (!chiefdomPHUMap[chiefdom]) chiefdomPHUMap[chiefdom] = [];
+                    if (!chiefdomPHUMap[chiefdom].includes(phu)) chiefdomPHUMap[chiefdom].push(phu);
+                    phuUIDMap[phu] = uid;
+                }
+            });
+            
+            state.regionDistrictMap = regionDistrictMap;
+            state.districtChiefdomMap = districtChiefdomMap;
+            state.chiefdomPHUMap = chiefdomPHUMap;
+            state.phuUIDMap = phuUIDMap;
         }
 
         function generateFormSections() {
@@ -2173,20 +2129,12 @@ Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
         
         // Dashboard handler
         function handleDashboard() {
-            if (typeof Dashboard !== 'undefined' && Dashboard.show) {
-                Dashboard.show();
-            } else {
-                showNotification('Dashboard module not loaded', 'error');
-            }
+            showNotification('Dashboard requires server setup. Configure SCRIPT_URL first.', 'info');
         }
         
         // Report handler
         function handleReport() {
-            if (typeof Report !== 'undefined' && Report.show) {
-                Report.show();
-            } else {
-                showNotification('Report module not loaded', 'error');
-            }
+            showNotification('Reports require Claude API key. Configure in settings.', 'info');
         }
 
         function setupCascadingListeners() {
@@ -2342,14 +2290,7 @@ Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
             const password = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('loginError');
             
-            // Debug: Log login attempt
-            console.log('Login attempt:', username, password);
-            console.log('Expected:', CONFIG.LOGIN_USERNAME, CONFIG.LOGIN_PASSWORD);
-            
             if (username === CONFIG.LOGIN_USERNAME && password === CONFIG.LOGIN_PASSWORD) {
-                console.log('Login successful');
-                alert('Login successful! Click OK to continue.'); // Debug alert
-                
                 try {
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('username', username);
@@ -2361,7 +2302,6 @@ Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
                 errorDiv.classList.remove('show');
                 showMainContent();
             } else {
-                console.log('Login failed - credentials do not match');
                 errorDiv.classList.add('show');
             }
         }
@@ -2377,21 +2317,14 @@ Bagbwe Chiefdom||Barlie MCHP||AXDmrJDUPHu`;
         }
 
         function showMainContent() {
-            console.log('showMainContent called');
-            try {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainContent').classList.add('show');
-                console.log('Main content should now be visible');
-                updateOnlineStatus();
-                updatePendingCount();
-                updateDraftCount();
-                
-                if (state.isOnline && state.pendingSubmissions.length > 0) {
-                    syncPendingSubmissions();
-                }
-            } catch (error) {
-                console.error('Error in showMainContent:', error);
-                alert('Error showing main content: ' + error.message);
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.add('show');
+            updateOnlineStatus();
+            updatePendingCount();
+            updateDraftCount();
+            
+            if (state.isOnline && state.pendingSubmissions.length > 0) {
+                syncPendingSubmissions();
             }
         }
 
